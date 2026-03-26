@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp API Docs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #238636;
+            --accent-hover: #2ea043;
+            --get-color: #58a6ff;
+            --post-color: #3fb950;
+            --delete-color: #f85149;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0; padding: 0;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(90deg, #1f2937 0%, #0d1117 100%);
+            padding: 40px 20px;
+            border-bottom: 1px solid #30363d;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #ffffff;
+            letter-spacing: -1px;
+            text-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+        }
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 10px auto 0;
+        }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .endpoint {
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .endpoint:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+        .ep-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid #30363d;
+            cursor: pointer;
+        }
+        .method {
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-right: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .method.get { background: rgba(88, 166, 255, 0.1); color: var(--get-color); border: 1px solid rgba(88, 166, 255, 0.2); }
+        .method.post { background: rgba(63, 185, 80, 0.1); color: var(--post-color); border: 1px solid rgba(63, 185, 80, 0.2); }
+        .method.delete { background: rgba(248, 81, 73, 0.1); color: var(--delete-color); border: 1px solid rgba(248, 81, 73, 0.2); }
+        
+        .path { font-family: monospace; font-size: 1.1rem; font-weight: 600; color: #fff; }
+        .ep-desc { margin-left: auto; color: var(--text-muted); font-size: 0.95rem; }
+        
+        .ep-body { padding: 24px 20px; display: none; }
+        .ep-body.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .section-title { font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin: 0 0 10px 0; letter-spacing: 1px; }
+        pre { background: #0d1117; padding: 16px; border-radius: 8px; border: 1px solid #30363d; overflow-x: auto; color: #e6edf3; font-family: monospace; font-size: 0.9rem; }
+        .param-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .param-table th, .param-table td { padding: 12px; text-align: left; border-bottom: 1px solid #30363d; }
+        .param-table th { color: var(--text-muted); font-weight: 600; font-size: 0.9rem; }
+        .param-table td { font-size: 0.95rem; }
+        code { background: rgba(255,255,255,0.1); padding: 3px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; color: #79c0ff; }
+        
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: rgba(255,255,255,0.1); color: #fff; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>WhatsApp API Docs</h1>
+        <p>Documentación interactiva de tu servidor REST Multi-Instancia.</p>
+    </div>
+
+    <div class="container">
+        
+        <!-- START SESSION -->
+        <div class="endpoint">
+            <div class="ep-header" onclick="toggleBody(this)">
+                <span class="method post">POST</span>
+                <span class="path">/api/sessions/start</span>
+                <span class="ep-desc">Crear o reconectar instancia</span>
+            </div>
+            <div class="ep-body">
+                <p>Inicia una nueva instancia de WhatsApp en el servidor y la prepara para vincular un dispositivo.</p>
+                <div class="section-title">Body (JSON)</div>
+                <table class="param-table">
+                    <tr><th>Parámetro</th><th>Tipo</th><th>Descripción</th></tr>
+                    <tr><td><code>id</code></td><td>string</td><td>Nombre único de tu instancia (ej. "ventas", "soporte").</td></tr>
+                </table>
+                <div class="section-title">Ejemplo de petición</div>
+                <pre>{
+  "id": "ventas"
+}</pre>
+            </div>
+        </div>
+
+        <!-- STATUS -->
+        <div class="endpoint">
+            <div class="ep-header" onclick="toggleBody(this)">
+                <span class="method get">GET</span>
+                <span class="path">/api/sessions/:id/status</span>
+                <span class="ep-desc">Consultar estado y QR</span>
+            </div>
+            <div class="ep-body">
+                <p>Devuelve el estado de la conexión (<code>connecting</code>, <code>connected</code>, <code>disconnected</code>). Si está esperando vinculación, devolverá el código QR en Base64.</p>
+                <div class="section-title">Parámetros de URL</div>
+                <table class="param-table">
+                    <tr><th>Parámetro</th><th>Descripción</th></tr>
+                    <tr><td><code>id</code></td><td>El identificador único de la instancia.</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- SEND TEXT -->
+        <div class="endpoint">
+            <div class="ep-header" onclick="toggleBody(this)">
+                <span class="method post">POST</span>
+                <span class="path">/api/sessions/:id/send/text</span>
+                <span class="ep-desc">Enviar texto</span>
+            </div>
+            <div class="ep-body">
+                <p>Envía un mensaje de texto plano a un número a través de la instancia seleccionada.</p>
+                <div class="section-title">Body (JSON)</div>
+                <table class="param-table">
+                    <tr><th>Parámetro</th><th>Tipo</th><th>Descripción</th></tr>
+                    <tr><td><code>number</code></td><td>string</td><td>Número de destino con código de país (ej. "5215555555555").</td></tr>
+                    <tr><td><code>message</code></td><td>string</td><td>El texto del mensaje a enviar.</td></tr>
+                </table>
+                <div class="section-title">Ejemplo de petición</div>
+                <pre>{
+  "number": "5215555555555",
+  "message": "¡Hola desde la API!"
+}</pre>
+            </div>
+        </div>
+
+        <!-- SEND MEDIA -->
+        <div class="endpoint">
+            <div class="ep-header" onclick="toggleBody(this)">
+                <span class="method post">POST</span>
+                <span class="path">/api/sessions/:id/send/media</span>
+                <span class="ep-desc">Enviar imagen o documento</span>
+            </div>
+            <div class="ep-body">
+                <p>Envía un archivo multimedia descargándolo de forma remota desde una URL pública.</p>
+                <div class="section-title">Body (JSON)</div>
+                <table class="param-table">
+                    <tr><th>Parámetro</th><th>Tipo</th><th>Descripción</th></tr>
+                    <tr><td><code>number</code></td><td>string</td><td>Número de destino con código de país.</td></tr>
+                    <tr><td><code>url</code></td><td>string</td><td>URL pública de la imagen/documento (.png, .jpg, .pdf, etc).</td></tr>
+                    <tr><td><code>caption</code></td><td>string</td><td>(Opcional) Texto que acompaña la imagen/archivo.</td></tr>
+                </table>
+                <div class="section-title">Ejemplo de petición</div>
+                <pre>{
+  "number": "5215555555555",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
+  "caption": "Logotipo de React"
+}</pre>
+            </div>
+        </div>
+
+        <!-- DELETE -->
+        <div class="endpoint">
+            <div class="ep-header" onclick="toggleBody(this)">
+                <span class="method delete">DELETE</span>
+                <span class="path">/api/sessions/:id</span>
+                <span class="ep-desc">Cerrar sesión</span>
+            </div>
+            <div class="ep-body">
+                <p>Desvincula el dispositivo de WhatsApp asociado a la instancia y elimina permanentemente los archivos de sesión del servidor.</p>
+                <div class="section-title">Parámetros de URL</div>
+                <table class="param-table">
+                    <tr><th>Parámetro</th><th>Descripción</th></tr>
+                    <tr><td><code>id</code></td><td>El identificador único de la instancia a eliminar y desvincular.</td></tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleBody(element) {
+            const body = element.nextElementSibling;
+            if (body.classList.contains('active')) {
+                body.classList.remove('active');
+            } else {
+                // Cerrar todos
+                document.querySelectorAll('.ep-body').forEach(el => el.classList.remove('active'));
+                body.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

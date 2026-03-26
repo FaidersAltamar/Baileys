@@ -1,0 +1,7 @@
+node_modules/
+.git/
+.github/
+baileys_auth_*
+wa-logs.txt
+npm-debug.log
+.DS_Store
